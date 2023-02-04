@@ -11,4 +11,17 @@ class ArticlesController < ApplicationController
     # binding.break
   end
 
+  # Create a new article
+  def new
+  end
+
+  def create
+    @article = Article.new(params.required(:article).permit(:title, :description))
+    if @article.save
+      redirect_to @article
+    else
+      redirect_to new_article_path
+    end
+    # binding.break
+  end
 end

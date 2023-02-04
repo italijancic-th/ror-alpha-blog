@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   # Articles CRUD routes
-  resources :articles, only: [:show, :index]
+  resources :articles, only: %i[show index new create]
 end
