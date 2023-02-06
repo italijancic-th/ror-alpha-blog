@@ -1,5 +1,16 @@
 <h1>New Article</h1>
 
+<%# Check if have any errors to show %>
+<% if @article.errors.any? %>
+  <h2 style='color: orange'>Article didn't save because of this errors:</h2>
+  <ul>
+    <% @article.errors.full_messages.each do |msg| %>
+      <li style='color: red'> <%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
 <%= form_with scope: :article, url: articles_path, local: true do |f| %>
   <p>
     <%= f.label :title %>
