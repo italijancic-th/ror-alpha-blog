@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  # This is a sort of middleware
   before_action :set_article, only: %i[show edit update destroy]
 
   def show
@@ -22,7 +23,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(params.required(:article).permit(:title, :description))
+    @article = Article.new(article_params)
     if @article.save
       flash[:notice] = 'Article was created successfully.'
       # Helpers usage to redirect to nother page
@@ -47,7 +48,7 @@ class ArticlesController < ApplicationController
   def update
     # Find the article by id -> done on before_action helper
     # Update article en DB
-    if @article.update(params.required(:article).permit(:title, :description))
+    if @article.update(article_params)
       flash[:notice] = 'Article successfully updated'
       redirect_to @article
     else
@@ -62,10 +63,18 @@ class ArticlesController < ApplicationController
     redirect_to articles_path
   end
 
+  # ---------------
   # Private methods
+  # ---------------
   private
 
+  # Get article by id from DB
   def set_article
     @article = Article.find(params[:id])
+  end
+
+  # Parse data from request params
+  def article_params
+    params.required(:article).permit(:title, :description)
   end
 end

@@ -1,32 +1,5 @@
 <h1>Edit article</h1>
 
-<%# Check if have any errors to show %>
-<% if @article.errors.any? %>
-  <h2 style='color: orange'>Article didn't save because of this errors:</h2>
-  <ul>
-    <% @article.errors.full_messages.each do |msg| %>
-      <li style='color: red'> <%= msg %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-
-<%= form_with model: @article, local: true do |f| %>
-  <p>
-    <%= f.label :title %>
-    <br>
-    <%= f.text_field :title %>
-  </p>
-
-  <p>
-    <%= f.label :description %>
-    <br>
-    <%= f.text_area :description %>
-  </p>
-
-  <p> <%= f.submit %> </p>
-
-<% end %>
-
+<%= render 'form' %>
 
 <%= link_to 'Return to articles list', articles_path %>
