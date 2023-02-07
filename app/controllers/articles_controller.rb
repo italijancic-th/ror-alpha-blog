@@ -11,7 +11,9 @@ class ArticlesController < ApplicationController
     # binding.break
   end
 
-  # Create a new article
+  # CREATE of CRUD operations involves two acctions on RoR:
+  # - new   --> To render new element form
+  # - crate --> To create new instance of model and save on data base
   def new
     # In order to get access to errors on save operations and redirect to this form again
     @article = Article.new
@@ -31,5 +33,33 @@ class ArticlesController < ApplicationController
       # new = name of template .erb to render
     end
     # binding.break
+  end
+
+  # UPDATE of CRUD operations, involve two acctions on RoR
+  # - edit    --> To show form to edit article data
+  # - update  --> To update DB entry with new data send from form render on edit action
+  def edit
+    # Find the article by id
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    # Find the article by id
+    @article = Article.find(params[:id])
+    # Update article en DB
+    if @article.update(params.required(:article).permit(:title, :description))
+      flash[:notice] = 'Article successfully updated'
+      redirect_to @article
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE operations of CRUD
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    # Redirect to articles index
+    redirect_to articles_path
   end
 end
