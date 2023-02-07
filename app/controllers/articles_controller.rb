@@ -1,8 +1,10 @@
 class ArticlesController < ApplicationController
+  before_action :set_article, only: %i[show edit update destroy]
 
   def show
     # @name = instance variable
-    @article = Article.find(params[:id])
+    # @article = Article.find(params[:id])
+    # this is now exec by before action
     # binding.break
   end
 
@@ -39,13 +41,11 @@ class ArticlesController < ApplicationController
   # - edit    --> To show form to edit article data
   # - update  --> To update DB entry with new data send from form render on edit action
   def edit
-    # Find the article by id
-    @article = Article.find(params[:id])
+    # Find the article by id is done be before_action
   end
 
   def update
-    # Find the article by id
-    @article = Article.find(params[:id])
+    # Find the article by id -> done on before_action helper
     # Update article en DB
     if @article.update(params.required(:article).permit(:title, :description))
       flash[:notice] = 'Article successfully updated'
@@ -57,9 +57,15 @@ class ArticlesController < ApplicationController
 
   # DELETE operations of CRUD
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
     # Redirect to articles index
     redirect_to articles_path
+  end
+
+  # Private methods
+  private
+
+  def set_article
+    @article = Article.find(params[:id])
   end
 end
