@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Article controller class
 class ArticlesController < ApplicationController
   # This is a sort of middleware
   before_action :set_article, only: %i[show edit update destroy]
@@ -14,7 +17,7 @@ class ArticlesController < ApplicationController
     # binding.break
   end
 
-  # CREATE of CRUD operations involves two acctions on RoR:
+  # CREATE of CRUD operations involves two actions on RoR:
   # - new   --> To render new element form
   # - crate --> To create new instance of model and save on data base
   def new
@@ -26,7 +29,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     if @article.save
       flash[:notice] = 'Article was created successfully.'
-      # Helpers usage to redirect to nother page
+      # Helpers usage to redirect to another page
       redirect_to @article
     else
       # Two ways to re render new article form, in case of error saving
@@ -38,7 +41,7 @@ class ArticlesController < ApplicationController
     # binding.break
   end
 
-  # UPDATE of CRUD operations, involve two acctions on RoR
+  # UPDATE of CRUD operations, involve two actions on RoR
   # - edit    --> To show form to edit article data
   # - update  --> To update DB entry with new data send from form render on edit action
   def edit
